@@ -1,0 +1,16 @@
+{
+  "name": "support-ticket-app",
+  "version": "1.0.0",
+  "description": "Support ticket app. My first full stack project using the MERN stack. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm start\" \"npm run dev\"",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\""
+  },
+  "author": "ryanbriggsdev",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  }
+}
