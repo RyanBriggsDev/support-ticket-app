@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import useAuthContext from './hooks/useAuthContext';
 
 // Pages
 import Home from './pages/Home';
@@ -11,14 +12,22 @@ import Nav from './components/Nav';
 import Footer from './components/Footer';
 
 function App() {
+  const { user } = useAuthContext();
+
   return (
     <div className="App flex flex-col justify-between min-h-screen">
       <BrowserRouter>
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/sign-up" element={<SignUp />} />
+          <Route
+            path="/login"
+            element={!user ? <Login /> : <Navigate to={'/'} />}
+          />
+          <Route
+            path="/sign-up"
+            element={!user ? <SignUp /> : <Navigate to="/" />}
+          />
           <Route path="/*" element={<Error404 />} />
         </Routes>
         <Footer />

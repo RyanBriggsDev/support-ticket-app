@@ -1,13 +1,16 @@
 import Container from '../components/Container';
+import { useLogin } from '../hooks/useLogin';
 import { useState } from 'react';
 
 export default function Login() {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { login, loading, error } = useLogin();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    await login(email, password);
   };
 
   return (
@@ -15,19 +18,14 @@ export default function Login() {
       <Container>
         <div className="flex items-center justify-center flex-col gap-9">
           <header>
-            <h1 className="text-3xl md:text-5xl">Login To Raise a Ticket</h1>
+            <h1 className="text-3xl md:text-5xl text-center">
+              Login To Raise a Ticket
+            </h1>
           </header>
-          <form onSubmit={handleSubmit} className="flex flex-col w-full gap-3">
-            <div className="flex flex-col gap-1">
-              <label className="font-bold">Name: </label>
-              <input
-                type="text"
-                onChange={(e) => setName(e.target.value)}
-                className="border border-gray-400 rounded px-3 py-1"
-                placeholder="Jim Bean"
-                value={name}
-              />
-            </div>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col w-full max-w-[500px] gap-3"
+          >
             <div className="flex flex-col gap-1">
               <label className="font-bold">Email: </label>
               <input

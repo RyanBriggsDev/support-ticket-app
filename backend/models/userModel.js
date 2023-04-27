@@ -5,15 +5,16 @@ const validator = require('validator');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+  name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 });
 
 // Static Signup Method
-userSchema.statics.signup = async function (email, password) {
+userSchema.statics.signup = async function (name, email, password) {
   // validation
-  if (!email || !password) {
-    throw Error('Both email and password fields are required.');
+  if (!email || !password || !name) {
+    throw Error('Name, Email and password fields are required.');
   }
   if (!validator.isEmail(email)) {
     throw Error('Email is not valid.');
@@ -29,7 +30,7 @@ userSchema.statics.signup = async function (email, password) {
   // hash password
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
-  const user = await this.create({ email, password: hash });
+  const user = await this.create({ name, email, password: hash });
 
   return user;
 };
