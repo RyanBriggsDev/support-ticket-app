@@ -1,10 +1,11 @@
 import Container from '../components/Container';
 import { useLogin } from '../hooks/useLogin';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isError, setIsError] = useState(false);
 
   const { login, loading, error } = useLogin();
 
@@ -12,6 +13,15 @@ export default function Login() {
     e.preventDefault();
     await login(email, password);
   };
+
+  useEffect(() => {
+    if (error) {
+      setIsError(true);
+      const time = setTimeout(() => {
+        setIsError(false);
+      }, 3000);
+    }
+  }, [error]);
 
   return (
     <div className="flex items-center justify-center">
@@ -46,9 +56,14 @@ export default function Login() {
                 value={password}
               />
             </div>
-            <button className="bg-blue-600 px-3 py-1 text-white rounded hover:bg-blue-800 ease-in-out duration-300">
+            <button className="2" disabled={loading}>
               Submit
             </button>
+            {isError && (
+              <p className="border border-red-500 text-black font-medium bg-red-100/50 px-3 py-2 rounded">
+                {error}
+              </p>
+            )}
           </form>
         </div>
       </Container>

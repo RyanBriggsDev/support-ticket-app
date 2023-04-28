@@ -14,7 +14,7 @@ const userSchema = new Schema({
 userSchema.statics.signup = async function (name, email, password) {
   // validation
   if (!email || !password || !name) {
-    throw Error('Name, Email and password fields are required.');
+    throw Error('Name, email and password fields are required.');
   }
   if (!validator.isEmail(email)) {
     throw Error('Email is not valid.');

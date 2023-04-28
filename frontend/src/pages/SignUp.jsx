@@ -1,11 +1,12 @@
 import Container from '../components/Container';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSignup } from '../hooks/useSignup';
 
 export default function Login() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isError, setIsError] = useState(false);
 
   const { signup, loading, error } = useSignup();
 
@@ -13,6 +14,15 @@ export default function Login() {
     e.preventDefault();
     await signup(name, email, password);
   };
+
+  useEffect(() => {
+    if (error) {
+      setIsError(true);
+      const time = setTimeout(() => {
+        setIsError(false);
+      }, 3000);
+    }
+  }, [error]);
 
   return loading ? (
     <p>Loading</p>
@@ -59,9 +69,18 @@ export default function Login() {
                 value={password}
               />
             </div>
-            <button className="bg-blue-600 px-3 py-1 text-white rounded hover:bg-blue-800 ease-in-out duration-300">
+            <button
+              className="bg-blue-600 px-3 py-1 text-white rounded hover:bg-blue-800 ease-in-out duration-300"
+              disabled={loading}
+            >
               Submit
             </button>
+
+            {isError && (
+              <p className="border border-red-500 text-black font-medium bg-red-100/50 px-3 py-2 rounded">
+                {error}
+              </p>
+            )}
           </form>
         </div>
       </Container>
