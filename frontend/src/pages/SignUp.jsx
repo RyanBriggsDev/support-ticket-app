@@ -70,7 +70,7 @@ export default function Login() {
               />
             </div>
             <button
-              className="bg-blue-600 px-3 py-1 text-white rounded hover:bg-blue-800 ease-in-out duration-300"
+              className="bg-blue-600 px-3 py-2 text-white rounded hover:bg-blue-800 ease-in-out duration-300"
               disabled={loading}
             >
               Submit

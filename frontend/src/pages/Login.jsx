@@ -56,7 +56,10 @@ export default function Login() {
                 value={password}
               />
             </div>
-            <button className="2" disabled={loading}>
+            <button
+              className="bg-blue-600 px-3 py-2 text-white rounded hover:bg-blue-800 ease-in-out duration-300"
+              disabled={loading}
+            >
               Submit
             </button>
             {isError && (
