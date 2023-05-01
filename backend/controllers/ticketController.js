@@ -21,4 +21,17 @@ const createTicket = async (req, res) => {
   }
 };
 
-module.exports = { createTicket };
+const getAllTickets = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    if (!userId) {
+      throw Error('Account error. Please refresh and try again.');
+    }
+    const tickets = await Ticket.find({ userId });
+    res.status(200).json(tickets);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = { createTicket, getAllTickets };
