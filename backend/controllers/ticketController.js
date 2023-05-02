@@ -1,33 +1,38 @@
 const Ticket = require('../models/ticketModel');
-const { validateCreateTicket } = require('../utils/validation');
 
-// create ticket
+// CREATE ticket
 const createTicket = async (req, res) => {
   const { title, userId, description } = req.body;
+  // validation
   try {
-    validateCreateTicket(title, userId, description);
-    try {
-      const ticket = await Ticket.create({ title, userId, description });
-      await res.status(200).json({
-        title: ticket.title,
-        userId: ticket.userId,
-        description: ticket.description,
-      });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+    if (!title) {
+      throw Error('Ticket title required.');
     }
+    if (!userId) {
+      throw Error('Account error. Please refresh and try again.');
+    }
+    if (!description) {
+      throw Error(
+        'Please fill in the description box to give us more information about your issue.'
+      );
+    }
+    const ticket = await Ticket.create({ title, userId, description });
+    await res.status(200).json({
+      title: ticket.title,
+      userId: ticket.userId,
+      description: ticket.description,
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
+// GET all tickets
 const getAllTickets = async (req, res) => {
-  const { userId } = req.body;
+  const user_id = req.user._id;
+
   try {
-    if (!userId) {
-      throw Error('Account error. Please refresh and try again.');
-    }
-    const tickets = await Ticket.find({ userId });
+    const tickets = await Ticket.find({ userId: user_id });
     res.status(200).json(tickets);
   } catch (error) {
     res.status(400).json({ error: error.message });

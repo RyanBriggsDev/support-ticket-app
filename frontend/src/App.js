@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Error404 from './pages/Error404';
+import Tickets from './pages/Tickets';
 
 // Components
 import Nav from './components/Nav';
@@ -20,6 +21,7 @@ function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/tickets" element={<Tickets />} />
           <Route
             path="/login"
             element={!user ? <Login /> : <Navigate to={'/'} />}

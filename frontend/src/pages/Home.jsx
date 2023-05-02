@@ -1,11 +1,10 @@
 import useAuthContext from '../hooks/useAuthContext';
 import Container from '../components/Container';
 import { Link } from 'react-router-dom';
+import CreateTicketForm from '../components/CreateTicketForm';
 
 export default function Home() {
   const { user } = useAuthContext();
-  console.log(user);
-
   if (!user) {
     return (
       <div className="flex items-center justify-center">
@@ -40,11 +39,11 @@ export default function Home() {
     <div className="flex items-center justify-center">
       <Container>
         <div className="flex items-center justify-center flex-col gap-9">
-          <header>
-            <h1 className="text-3xl md:text-5xl text-center">
-              Welcome back, {user.name}!
-            </h1>
+          <header className="flex flex-col gap-3 text-center items-center justify-center">
+            <h1 className="text-3xl md:text-5xl">Welcome back, {user.name}!</h1>
+            <p>Sorry to see you again, what's the problem?</p>
           </header>
+          <CreateTicketForm />
         </div>
       </Container>
     </div>
