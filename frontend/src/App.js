@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Error404 from './pages/Error404';
 import Tickets from './pages/Tickets';
+import SingleTicket from './pages/tickets/[id]';
 
 // Components
 import Nav from './components/Nav';
@@ -16,12 +17,13 @@ function App() {
   const { user } = useAuthContext();
 
   return (
-    <div className="App flex flex-col justify-between min-h-screen">
+    <div className="App flex flex-col justify-between min-h-screen bg-gray-100">
       <BrowserRouter>
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tickets" element={<Tickets />} />
+          <Route path="/tickets/:id" element={<SingleTicket />} />
           <Route
             path="/login"
             element={!user ? <Login /> : <Navigate to={'/'} />}

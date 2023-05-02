@@ -16,7 +16,12 @@ const createTicket = async (req, res) => {
         'Please fill in the description box to give us more information about your issue.'
       );
     }
-    const ticket = await Ticket.create({ title, userId, description });
+    const ticket = await Ticket.create({
+      title,
+      userId,
+      description,
+      active: true,
+    });
     await res.status(200).json({
       title: ticket.title,
       userId: ticket.userId,
