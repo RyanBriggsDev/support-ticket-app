@@ -30,6 +30,7 @@ export default function Tickets() {
       }
     };
     if (!user) {
+      return;
     } else {
       fetchData();
     }

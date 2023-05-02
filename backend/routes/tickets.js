@@ -3,6 +3,7 @@ const requireAuth = require('../middleware/requireAuth');
 const {
   createTicket,
   getAllTickets,
+  getSingleTicket,
 } = require('../controllers/ticketController');
 
 const router = express.Router();
@@ -11,6 +12,7 @@ const router = express.Router();
 router.use(requireAuth);
 
 router.get('/', getAllTickets);
+router.get('/:id', getSingleTicket);
 router.post('/create', createTicket);
 
 module.exports = router;

@@ -1,4 +1,6 @@
+const { findById } = require('../models/ticketModel');
 const Ticket = require('../models/ticketModel');
+const mongoose = require('mongoose');
 
 // CREATE ticket
 const createTicket = async (req, res) => {
@@ -44,4 +46,15 @@ const getAllTickets = async (req, res) => {
   }
 };
 
-module.exports = { createTicket, getAllTickets };
+// GET single ticket
+const getSingleTicket = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'Cannot find ticket.' });
+  }
+  const ticket = await Ticket.findById(id);
+  if (!ticket) return res.status(404).json({ error: 'Cannot find ticket.' });
+  res.status(200).json(ticket);
+};
+
+module.exports = { createTicket, getAllTickets, getSingleTicket };
