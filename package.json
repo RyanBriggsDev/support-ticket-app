@@ -12,5 +12,8 @@
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.0.1"
+  },
+  "dependencies": {
+    "prettier-eslint": "^15.0.1"
   }
 }

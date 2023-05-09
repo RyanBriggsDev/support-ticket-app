@@ -1,5 +1,5 @@
+const { Ticket, Message } = require('../models/ticketModel');
 const { findById } = require('../models/ticketModel');
-const Ticket = require('../models/ticketModel');
 const mongoose = require('mongoose');
 
 // CREATE ticket
@@ -23,11 +23,13 @@ const createTicket = async (req, res) => {
       userId,
       description,
       active: true,
+      messages: { message: description, user: userId },
     });
     await res.status(200).json({
       title: ticket.title,
       userId: ticket.userId,
       description: ticket.description,
+      messages: ticket.messages,
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -57,4 +59,47 @@ const getSingleTicket = async (req, res) => {
   res.status(200).json(ticket);
 };
 
-module.exports = { createTicket, getAllTickets, getSingleTicket };
+// UPDATE single ticket
+const updateTicket = async (req, res) => {
+  const { id } = req.params;
+  const { title, description, active } = req.body;
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: 'Cannot find ticket.' });
+    }
+    const ticket = await Ticket.findOneAndUpdate(id, {
+      title,
+      description,
+      active,
+    });
+    await res.status(200).json(ticket);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Add new message
+const addMessage = async (req, res) => {
+  const { message, user } = req.body;
+  const { id } = req.params;
+  // find ticket
+  try {
+    const ticket = await Ticket.findById(id);
+    if (!ticket) throw Error('No ticket found.');
+    if (ticket) {
+      ticket.messages.push({ message, user });
+      await ticket.save();
+      res.status(200).json(ticket);
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  createTicket,
+  getAllTickets,
+  getSingleTicket,
+  updateTicket,
+  addMessage,
+};

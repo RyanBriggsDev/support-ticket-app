@@ -4,6 +4,8 @@ const {
   createTicket,
   getAllTickets,
   getSingleTicket,
+  updateTicket,
+  addMessage,
 } = require('../controllers/ticketController');
 
 const router = express.Router();
@@ -12,7 +14,9 @@ const router = express.Router();
 router.use(requireAuth);
 
 router.get('/', getAllTickets);
-router.get('/:id', getSingleTicket);
 router.post('/create', createTicket);
+router.get('/:id', getSingleTicket);
+router.put('/:id', updateTicket);
+router.post('/message/:id', addMessage);
 
 module.exports = router;
