@@ -46,7 +46,7 @@ export default function SingleTicket() {
     <div className="flex flex-col justify-center items-center gap-6">
       <Container>
         <div className="shadow bg-white p-6 gap-9 flex flex-col rounded">
-          <div className="justify-between flex items-start">
+          <div className="justify-between flex items-center">
             <h1 className="capitalize font-semibold text-3xl md:text-5xl">
               {data.title}
             </h1>
@@ -59,9 +59,6 @@ export default function SingleTicket() {
             >
               {data.active ? 'Active' : 'Resolved'}
             </p>
-          </div>
-          <div className="w-full flex">
-            <p>{data.description}</p>
           </div>
         </div>
       </Container>
