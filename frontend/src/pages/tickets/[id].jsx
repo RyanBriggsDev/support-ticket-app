@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Container from '../../components/Container';
 import useAuthContext from '../../hooks/useAuthContext';
+import TicketChat from '../../components/TicketChat';
 
 export default function SingleTicket() {
   const { user } = useAuthContext();
@@ -42,9 +43,9 @@ export default function SingleTicket() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>error fetching data</p>;
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex flex-col justify-center items-center gap-6">
       <Container>
-        <div className="shadow bg-white p-6 gap-9 flex flex-col">
+        <div className="shadow bg-white p-6 gap-9 flex flex-col rounded">
           <div className="justify-between flex items-start">
             <h1 className="capitalize font-semibold text-3xl md:text-5xl">
               {data.title}
@@ -64,6 +65,7 @@ export default function SingleTicket() {
           </div>
         </div>
       </Container>
+      <TicketChat messages={data.messages} />
     </div>
   );
 }
