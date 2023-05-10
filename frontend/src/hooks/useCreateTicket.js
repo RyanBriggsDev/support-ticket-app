@@ -12,7 +12,12 @@ export const useCreateTicket = () => {
     setLoading(true);
     setError(null);
     const res = await fetch('/api/tickets/create', {
-      body: JSON.stringify({ title, description, userId: user.userId }),
+      body: JSON.stringify({
+        title,
+        description,
+        userId: user.userId,
+        userName: user.name,
+      }),
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

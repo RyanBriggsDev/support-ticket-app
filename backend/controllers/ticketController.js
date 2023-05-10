@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 // CREATE ticket
 const createTicket = async (req, res) => {
-  const { title, userId, description } = req.body;
+  const { title, userId, description, userName } = req.body;
   // validation
   try {
     if (!title) {
@@ -23,7 +23,7 @@ const createTicket = async (req, res) => {
       userId,
       description,
       active: true,
-      messages: { message: description, user: userId },
+      messages: { message: description, user: userId, userName },
     });
     await res.status(200).json({
       title: ticket.title,
@@ -80,14 +80,20 @@ const updateTicket = async (req, res) => {
 
 // Add new message
 const addMessage = async (req, res) => {
-  const { message, user } = req.body;
+  const { message, user, userName } = req.body;
   const { id } = req.params;
   // find ticket
   try {
+    if (!message) {
+      throw Error('Please add a message.');
+    }
+    if (!user || !userName) {
+      throw Error('Account error. Please refresh and try again.');
+    }
     const ticket = await Ticket.findById(id);
     if (!ticket) throw Error('No ticket found.');
     if (ticket) {
-      ticket.messages.push({ message, user });
+      ticket.messages.push({ message, user, userName });
       await ticket.save();
       res.status(200).json(ticket);
     }

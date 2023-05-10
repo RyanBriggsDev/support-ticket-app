@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const messageSchema = new Schema({
   message: { type: String, required: true },
   user: { type: String, required: true },
+  userName: { type: String, required: true },
 });
 
 const ticketSchema = new Schema(
