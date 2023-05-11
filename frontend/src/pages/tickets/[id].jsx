@@ -10,6 +10,7 @@ export default function SingleTicket() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const [messageChange, setMessageChange] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,9 +37,7 @@ export default function SingleTicket() {
     } else {
       fetchData();
     }
-  }, [user]);
-
-  console.log(data);
+  }, [user, messageChange, id]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>error fetching data</p>;
@@ -46,7 +45,7 @@ export default function SingleTicket() {
     <div className="flex flex-col justify-center items-center gap-6">
       <Container>
         <div className="shadow bg-white p-6 gap-9 flex flex-col rounded">
-          <div className="justify-between flex items-center">
+          <div className="justify-between flex flex-col md:flex-row gap-3 items-center text-center">
             <h1 className="capitalize font-semibold text-3xl md:text-5xl">
               {data.title}
             </h1>
@@ -62,7 +61,10 @@ export default function SingleTicket() {
           </div>
         </div>
       </Container>
-      <TicketChat messages={data.messages} />
+      <TicketChat
+        messages={data.messages}
+        setMessageChange={setMessageChange}
+      />
     </div>
   );
 }

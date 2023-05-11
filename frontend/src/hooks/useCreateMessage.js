@@ -29,8 +29,6 @@ export const useCreateMessage = () => {
       setCreateMessageError(json.error);
     }
     if (res.ok) {
-      // dispatch to global state
-      console.log('Success?');
       setCreateMessageLoading(false);
     }
   };

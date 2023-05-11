@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import Container from './Container';
-import { useEffect } from 'react';
 import useAuthContext from '../hooks/useAuthContext';
 import { useLogout } from '../hooks/useLogout';
 
