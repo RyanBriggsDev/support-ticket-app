@@ -3,8 +3,9 @@ import useAuthContext from '../hooks/useAuthContext';
 import { useCreateMessage } from '../hooks/useCreateMessage';
 import { BiSend } from 'react-icons/bi';
 import { useState, useEffect } from 'react';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
-export default function TicketChat({ messages }) {
+export default function TicketChat({ messages, setMessageChange }) {
   const { user } = useAuthContext();
 
   return (
@@ -19,38 +20,56 @@ export default function TicketChat({ messages }) {
                 }`}
                 key={index}
               >
-                <div className="flex gap-3 items-center">
-                  {message.user === user.userId ? (
+                {message.user === user.userId ? (
+                  // current user messages
+                  <div className="flex flex-row gap-3 w-full justify-end">
                     <>
-                      <p>{message.userName}</p>
+                      <div className="flex flex-col items-end text-end justify-center">
+                        <p>{message.userName}</p>
+                        <p className="text-sm">
+                          {formatDistanceToNow(new Date(message.createdAt), {
+                            addSuffix: true,
+                          })}
+                        </p>
+                      </div>
                       <p
                         className={`bg-blue-500 text-white py-2 px-3 rounded w-fit shadow`}
                       >
                         {message.message}
                       </p>
                     </>
-                  ) : (
+                  </div>
+                ) : (
+                  // other messages
+                  <div className="flex flex-row gap-3 w-full justify-start">
                     <>
                       <p
-                        className={`bg-gray-200 py-2 px-3 rounded w-fit shadow`}
+                        className={`bg-gray-200 text-black py-2 px-3 rounded w-fit shadow`}
                       >
                         {message.message}
                       </p>
-                      <p>{message.userName}</p>
+                      <div className="flex flex-col items-start text-start justify-center">
+                        <p>{message.userName}</p>
+                        <p className="text-sm">
+                          {formatDistanceToNow(new Date(message.createdAt), {
+                            addSuffix: true,
+                          })}
+                        </p>
+                      </div>
                     </>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
-        <MessageForm />
+        <MessageForm setMessageChange={setMessageChange} />
       </div>
     </Container>
   );
 }
 
-const MessageForm = () => {
+const MessageForm = ({ setMessageChange }) => {
   const { createMessage, createMessageError, createMessageLoading } =
     useCreateMessage();
 
@@ -74,6 +93,7 @@ const MessageForm = () => {
       return setError('Please enter a message first.');
     }
     await createMessage(message);
+    setMessageChange(message);
   };
 
   if (createMessageLoading) {

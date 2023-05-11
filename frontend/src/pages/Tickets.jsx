@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import useAuthContext from '../hooks/useAuthContext';
 import Container from '../components/Container';
 import TicketCard from '../components/TicketCard';
+import useTicketsContext from '../hooks/useTicketsContext';
 
 export default function Tickets() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
   const { user } = useAuthContext();
+
+  const { tickets, dispatch } = useTicketsContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,8 +26,8 @@ export default function Tickets() {
         setLoading(false);
       }
       if (res.ok) {
-        setData(json);
         setError(null);
+        dispatch({ type: 'SET_TICKETS', payload: json });
         setLoading(false);
       }
     };
@@ -38,7 +40,7 @@ export default function Tickets() {
 
   if (loading) return <p>Loading...</p>;
 
-  if (data) {
+  if (tickets) {
     return (
       <div className="flex items-center justify-center">
         <Container>
@@ -49,12 +51,15 @@ export default function Tickets() {
             <div
               id="ticket-links"
               className={`grid w-full gap-3 
-              ${data.length === 1 && 'grid-cols-1'}
-              ${data.length === 2 && 'grid-cols-1 md:grid-cols-2'}
-              ${data.length >= 3 && 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}
+              ${tickets.length === 1 && 'grid-cols-1'}
+              ${tickets.length === 2 && 'grid-cols-1 md:grid-cols-2'}
+              ${
+                tickets.length >= 3 &&
+                'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+              }
               `}
             >
-              {data.map((ticket, index) => (
+              {tickets.map((ticket, index) => (
                 <TicketCard key={index} ticket={ticket} />
               ))}
             </div>
