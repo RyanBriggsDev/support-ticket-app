@@ -16,13 +16,14 @@ adminSchema.statics.signup = async function (name, email, password) {
   if (!email || !password || !name) {
     throw Error('Name, email and password fields are required.');
   }
+  adm;
   if (!validator.isEmail(email)) {
     throw Error('Email is not valid.');
   }
   if (!validator.isStrongPassword(password)) {
     throw Error('Password is not strong enough.');
   }
-  const exists = await findOne({ email });
+  const exists = await this.findOne({ email });
   if (exists) {
     throw Error('Admin already exists. Please login instead.');
   }

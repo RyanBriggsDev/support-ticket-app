@@ -24,10 +24,12 @@ const loginAdmin = async (req, res) => {
 const signupAdmin = async (req, res) => {
   const { name, email, password } = req.body;
   try {
-    const admin = await Admin.singup(name, email, password);
+    const admin = await Admin.signup(name, email, password);
     const token = createToken(admin._id);
     res.status(200).json({ name, email, adminid: admin._id, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
+module.exports = { loginAdmin, signupAdmin };
