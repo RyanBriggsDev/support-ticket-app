@@ -8,6 +8,8 @@ import SignUp from './pages/SignUp';
 import Error404 from './pages/Error404';
 import Tickets from './pages/Tickets';
 import SingleTicket from './pages/tickets/[id]';
+import AgentLogin from './pages/agent/AgentLogin';
+import AgentSignup from './pages/agent/AgentSignup';
 
 // Components
 import Nav from './components/Nav';
@@ -22,6 +24,7 @@ function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
+          {/* user pages */}
           <Route path="/tickets" element={<Tickets />} />
           <Route path="/tickets/:id" element={<SingleTicket />} />
           <Route
@@ -32,6 +35,9 @@ function App() {
             path="/sign-up"
             element={!user ? <SignUp /> : <Navigate to="/" />}
           />
+          {/* agent pages */}
+          <Route path="/agent/login" element={<AgentLogin />} />
+          <Route path="/agent/signup" element={<AgentSignup />} />
           <Route path="/*" element={<Error404 />} />
         </Routes>
         <Footer />
