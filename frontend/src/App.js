@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import useAuthContext from './hooks/useAuthContext';
+import { useAdminContext } from './hooks/useAdminContext';
 
 // Pages
 import Home from './pages/Home';
@@ -8,8 +9,9 @@ import SignUp from './pages/SignUp';
 import Error404 from './pages/Error404';
 import Tickets from './pages/Tickets';
 import SingleTicket from './pages/tickets/[id]';
-import AgentLogin from './pages/agent/AgentLogin';
-import AgentSignup from './pages/agent/AgentSignup';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminSignup from './pages/admin/AdminSignup';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 // Components
 import Nav from './components/Nav';
@@ -17,6 +19,7 @@ import Footer from './components/Footer';
 
 function App() {
   const { user } = useAuthContext();
+  const { admin } = useAdminContext();
 
   return (
     <div className="App flex flex-col justify-between min-h-screen bg-gray-100">
@@ -35,9 +38,23 @@ function App() {
             path="/sign-up"
             element={!user ? <SignUp /> : <Navigate to="/" />}
           />
-          {/* agent pages */}
-          <Route path="/agent/login" element={<AgentLogin />} />
-          <Route path="/agent/signup" element={<AgentSignup />} />
+          {/* admin pages */}
+          <Route
+            path="/admin/login"
+            element={
+              !admin ? <AdminLogin /> : <Navigate to="/admin/dashboard" />
+            }
+          />
+          <Route
+            path="/admin/signup"
+            element={
+              !admin ? <AdminSignup /> : <Navigate to="/admin/dashboard" />
+            }
+          />
+          <Route
+            path="/admin/dashboard"
+            element={!admin ? <AdminLogin /> : <AdminDashboard />}
+          />
           <Route path="/*" element={<Error404 />} />
         </Routes>
         <Footer />

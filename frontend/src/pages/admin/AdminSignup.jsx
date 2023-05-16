@@ -2,7 +2,7 @@ import Container from '../../components/Container';
 import { useState, useEffect } from 'react';
 import { useAdminSignup } from '../../hooks/useAdminSignup';
 
-export default function AgentSignup() {
+export default function AdminSignup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -13,7 +13,7 @@ export const adminAuthReducer = (state, action) => {
 };
 
 export const AdminAuthProvider = ({ children }) => {
-  const [state, agentDispatch] = useReducer(AdminAuthContext, { admin: null });
+  const [state, agentDispatch] = useReducer(adminAuthReducer, { admin: null });
 
   useEffect(() => {
     const admin = JSON.parse(localStorage.getItem('admin'));

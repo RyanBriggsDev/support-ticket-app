@@ -16,7 +16,6 @@ adminSchema.statics.signup = async function (name, email, password) {
   if (!email || !password || !name) {
     throw Error('Name, email and password fields are required.');
   }
-  adm;
   if (!validator.isEmail(email)) {
     throw Error('Email is not valid.');
   }
