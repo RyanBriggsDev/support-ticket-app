@@ -16,6 +16,7 @@ import AdminSingleTicket from './pages/admin/[id]';
 
 // Components
 import Nav from './components/Nav';
+import AdminNav from './components/AdminNav';
 import Footer from './components/Footer';
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
   return (
     <div className="App flex flex-col justify-between min-h-screen bg-gray-100">
       <BrowserRouter>
-        <Nav />
+        {admin ? <AdminNav /> : <Nav />}
         <Routes>
           <Route path="/" element={<Home />} />
           {/* user pages */}
