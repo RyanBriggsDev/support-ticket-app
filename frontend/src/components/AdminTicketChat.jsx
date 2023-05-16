@@ -1,27 +1,30 @@
 import Container from './Container';
-import useAuthContext from '../hooks/useAuthContext';
-import { useCreateMessage } from '../hooks/useCreateMessage';
-import { BiSend } from 'react-icons/bi';
-import { useState, useEffect } from 'react';
+import { useAdminContext } from '../hooks/useAdminContext';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { useState } from 'react';
+import { BiSend } from 'react-icons/bi';
+import { useAdminCreateMessage } from '../hooks/useAdminCreateMessage';
+import { useEffect } from 'react';
 
 export default function AdminTicketChat({ messages, setMessageChange }) {
-  const { user } = useAuthContext();
+  const { admin } = useAdminContext();
 
   return (
     <Container>
       <div className="shadow bg-white p-6 gap-9 flex flex-col rounded w-full">
         <div className="justify-between flex items-start flex-col gap-3">
           <div className="w-full flex flex-col gap-6">
-            {/* {messages.map((message, index) => (
+            {messages.map((message, index) => (
               <div
                 className={`w-full flex ${
-                  message.user === user.userId ? 'justify-end' : 'justify-start'
+                  message.user === admin.adminId
+                    ? 'justify-end'
+                    : 'justify-start'
                 }`}
                 key={index}
               >
-                {message.user === user.userId ? (
-                  // current user messages
+                {message.user === admin.adminId ? (
+                  // current admin messages
                   <div className="flex flex-row gap-3 w-full justify-end">
                     <>
                       <div className="flex flex-col items-end text-end justify-center">
@@ -60,7 +63,7 @@ export default function AdminTicketChat({ messages, setMessageChange }) {
                   </div>
                 )}
               </div>
-            ))} */}
+            ))}
           </div>
         </div>
         <MessageForm setMessageChange={setMessageChange} />
@@ -70,8 +73,8 @@ export default function AdminTicketChat({ messages, setMessageChange }) {
 }
 
 const MessageForm = ({ setMessageChange }) => {
-  const { createMessage, createMessageError, createMessageLoading } =
-    useCreateMessage();
+  const { adminCreateMessage, createMessageError, createMessageLoading } =
+    useAdminCreateMessage();
 
   const [message, setMessage] = useState('');
   const [error, setError] = useState(null);
@@ -89,11 +92,11 @@ const MessageForm = ({ setMessageChange }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!message) {
-    //   return setError('Please enter a message first.');
-    // }
-    // await createMessage(message);
-    // setMessageChange(message);
+    if (!message) {
+      return setError('Please enter a message first.');
+    }
+    await adminCreateMessage(message);
+    setMessageChange(message);
   };
 
   if (createMessageLoading) {

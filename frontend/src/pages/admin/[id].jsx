@@ -63,7 +63,10 @@ export default function AdminSingleTicket() {
           </div>
         </div>
       </Container>
-      <AdminTicketChat />
+      <AdminTicketChat
+        messages={data.messages}
+        setMessageChange={setMessageChange}
+      />
     </div>
   );
 }
