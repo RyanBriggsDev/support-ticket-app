@@ -1,4 +1,4 @@
-const { Ticket, Message } = require('../models/ticketModel');
+const { Ticket } = require('../models/ticketModel');
 const { findById } = require('../models/ticketModel');
 const mongoose = require('mongoose');
 
@@ -39,7 +39,6 @@ const createTicket = async (req, res) => {
 // GET all tickets
 const getAllTickets = async (req, res) => {
   const user_id = req.user._id;
-
   try {
     const tickets = await Ticket.find({ userId: user_id });
     res.status(200).json(tickets);

@@ -13,17 +13,17 @@ export const adminAuthReducer = (state, action) => {
 };
 
 export const AdminAuthProvider = ({ children }) => {
-  const [state, agentDispatch] = useReducer(adminAuthReducer, { admin: null });
+  const [state, adminDispatch] = useReducer(adminAuthReducer, { admin: null });
 
   useEffect(() => {
     const admin = JSON.parse(localStorage.getItem('admin'));
-    if (admin) agentDispatch({ type: 'LOGIN', payload: admin });
+    if (admin) adminDispatch({ type: 'LOGIN', payload: admin });
   }, []);
 
   console.log('AdminAuthContext state: ', state);
 
   return (
-    <AdminAuthContext.Provider value={{ ...state, agentDispatch }}>
+    <AdminAuthContext.Provider value={{ ...state, adminDispatch }}>
       {children}
     </AdminAuthContext.Provider>
   );

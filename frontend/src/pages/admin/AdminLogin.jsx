@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { useAdminLogin } from '../../hooks/useAdminLogin';
 
 export default function AdminLogin() {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isError, setIsError] = useState(false);
@@ -14,7 +13,7 @@ export default function AdminLogin() {
     e.preventDefault();
     await adminLogin(email, password);
   };
-  ``;
+
   useEffect(() => {
     if (adminError) {
       setIsError(true);

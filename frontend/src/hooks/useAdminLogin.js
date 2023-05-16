@@ -4,7 +4,7 @@ import { useAdminContext } from './useAdminContext';
 export const useAdminLogin = () => {
   const [adminError, setAdminError] = useState(null);
   const [adminLoading, setAdminLoading] = useState(null);
-  const { agentDispatch } = useAdminContext();
+  const { adminDispatch } = useAdminContext();
 
   const adminLogin = async (email, password) => {
     setAdminLoading(true);
@@ -23,7 +23,7 @@ export const useAdminLogin = () => {
       setAdminError(json.error);
     } else {
       localStorage.setItem('admin', JSON.stringify(json));
-      agentDispatch({ type: 'LOGIN', payload: json });
+      adminDispatch({ type: 'LOGIN', payload: json });
       setAdminLoading(false);
     }
   };
