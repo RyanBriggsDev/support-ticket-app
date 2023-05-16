@@ -60,7 +60,7 @@ export default function Tickets() {
               `}
             >
               {tickets.map((ticket, index) => (
-                <TicketCard key={index} ticket={ticket} />
+                <TicketCard url={'/tickets'} key={index} ticket={ticket} />
               ))}
             </div>
           </div>

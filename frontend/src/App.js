@@ -12,6 +12,7 @@ import SingleTicket from './pages/tickets/[id]';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminSignup from './pages/admin/AdminSignup';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminSingleTicket from './pages/admin/[id]';
 
 // Components
 import Nav from './components/Nav';
@@ -54,6 +55,10 @@ function App() {
           <Route
             path="/admin/dashboard"
             element={!admin ? <AdminLogin /> : <AdminDashboard />}
+          />
+          <Route
+            path="/admin/tickets/:id"
+            element={!admin ? <AdminLogin /> : <AdminSingleTicket />}
           />
           <Route path="/*" element={<Error404 />} />
         </Routes>

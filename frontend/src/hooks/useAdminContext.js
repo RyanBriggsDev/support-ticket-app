@@ -5,9 +5,7 @@ export const useAdminContext = () => {
   const context = useContext(AdminAuthContext);
 
   if (!context) {
-    throw Error(
-      'useAdminAuthContext must be used inside an AdminAuthProvider.'
-    );
+    throw Error('useAdminContext must be used inside an AdminAuthProvider.');
   }
   return context;
 };
