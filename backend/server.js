@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/users');
 const ticketRoutes = require('./routes/tickets');
 const adminRoutes = require('./routes/admin');
+const adminTickets = require('./routes/adminTickets');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 app.use('/api/users', userRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/admin/tickets', adminTickets);
 
 app.use('/', (req, res) => {
   res.json('Welcome to the app');

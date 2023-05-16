@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Container from '../../components/Container';
 import { useAdminContext } from '../../hooks/useAdminContext';
 import TicketChat from '../../components/TicketChat';
+import AdminTicketChat from '../../components/AdminTicketChat';
 
 export default function AdminSingleTicket() {
   const { admin } = useAdminContext();
@@ -16,7 +17,7 @@ export default function AdminSingleTicket() {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
-      const res = await fetch(`/api/tickets/${id}`, {
+      const res = await fetch(`/api/admin/tickets/${id}`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${admin.token}`,
@@ -62,10 +63,7 @@ export default function AdminSingleTicket() {
           </div>
         </div>
       </Container>
-      <TicketChat
-        messages={data.messages}
-        setMessageChange={setMessageChange}
-      />
+      <AdminTicketChat />
     </div>
   );
 }
