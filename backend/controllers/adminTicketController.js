@@ -1,46 +1,10 @@
 const { Ticket } = require('../models/ticketModel');
-const { findById } = require('../models/ticketModel');
 const mongoose = require('mongoose');
-
-// CREATE ticket
-const createTicket = async (req, res) => {
-  const { title, userId, description, userName } = req.body;
-  // validation
-  try {
-    if (!title) {
-      throw Error('Ticket title required.');
-    }
-    if (!userId) {
-      throw Error('Account error. Please refresh and try again.');
-    }
-    if (!description) {
-      throw Error(
-        'Please fill in the description box to give us more information about your issue.'
-      );
-    }
-    const ticket = await Ticket.create({
-      title,
-      userId,
-      description,
-      active: true,
-      messages: { message: description, user: userId, userName },
-    });
-    await res.status(200).json({
-      title: ticket.title,
-      userId: ticket.userId,
-      description: ticket.description,
-      messages: ticket.messages,
-    });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
 
 // GET all tickets
 const getAllTickets = async (req, res) => {
-  const user_id = req.user._id;
   try {
-    const tickets = await Ticket.find({ userId: user_id });
+    const tickets = await Ticket.find({});
     res.status(200).json(tickets);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -102,7 +66,6 @@ const addMessage = async (req, res) => {
 };
 
 module.exports = {
-  createTicket,
   getAllTickets,
   getSingleTicket,
   updateTicket,

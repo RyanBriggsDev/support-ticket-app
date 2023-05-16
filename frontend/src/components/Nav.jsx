@@ -2,10 +2,16 @@ import { Link } from 'react-router-dom';
 import Container from './Container';
 import useAuthContext from '../hooks/useAuthContext';
 import { useLogout } from '../hooks/useLogout';
+import { useNavigate } from 'react-router-dom';
 
 export default function Nav() {
   const { user } = useAuthContext();
+  const navigate = useNavigate();
   const { logout } = useLogout();
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <nav className="flex items-center justify-center py-3">
@@ -19,7 +25,7 @@ export default function Nav() {
           </Link>
           <div id="nav-links" className="flex gap-3">
             {user ? (
-              <button onClick={() => logout()}>Logout</button>
+              <button onClick={() => handleLogout()}>Logout</button>
             ) : (
               <>
                 <Link
