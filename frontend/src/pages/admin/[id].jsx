@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Container from '../../components/Container';
 import { useAdminContext } from '../../hooks/useAdminContext';
-import TicketChat from '../../components/TicketChat';
 import AdminTicketChat from '../../components/AdminTicketChat';
+import { MuiSwitch } from '../../components/MuiSwitch';
 
 export default function AdminSingleTicket() {
   const { admin } = useAdminContext();
@@ -12,6 +12,7 @@ export default function AdminSingleTicket() {
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [messageChange, setMessageChange] = useState(null);
+  const [activeChange, setActiveChange] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +40,7 @@ export default function AdminSingleTicket() {
     } else {
       fetchData();
     }
-  }, [admin, messageChange, id]);
+  }, [admin, messageChange, id, activeChange]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>error fetching data</p>;
@@ -66,6 +67,12 @@ export default function AdminSingleTicket() {
       <AdminTicketChat
         messages={data.messages}
         setMessageChange={setMessageChange}
+      />
+      <MuiSwitch
+        active={data.active}
+        admin={admin}
+        setActiveChange={setActiveChange}
+        activeChange={activeChange}
       />
     </div>
   );
