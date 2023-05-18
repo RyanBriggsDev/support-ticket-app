@@ -14,7 +14,7 @@ router.use(requireAdminAuth);
 
 router.get('/', getAllTickets);
 router.get('/:id', getSingleTicket);
-router.patch('/:id', updateTicket);
+router.put('/:id', updateTicket);
 router.post('/message/:id', addMessage);
 
 module.exports = router;

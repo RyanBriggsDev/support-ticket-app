@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 export default function TicketCard({ ticket, url }) {
+  console.log(ticket);
   const navigate = useNavigate();
   return (
     <div

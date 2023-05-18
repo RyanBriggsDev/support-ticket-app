@@ -1,21 +1,43 @@
 import Container from '../../components/Container';
-import { useAdminLogout } from '../../hooks/useAdminLogout';
-import { useNavigate } from 'react-router-dom';
 import TicketCard from '../../components/TicketCard';
 import { useAdminContext } from '../../hooks/useAdminContext';
+import useTicketsContext from '../../hooks/useTicketsContext';
+import { useEffect, useState } from 'react';
 
 export default function AdminDashboard() {
-  const { adminLogout } = useAdminLogout();
-  const navigate = useNavigate();
+  const { admin } = useAdminContext();
+  const { tickets, dispatch } = useTicketsContext();
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const admin = useAdminContext().admin;
-  const { tickets } = admin;
+  useEffect(() => {
+    const fetchData = async () => {
+      setError(null);
+      const res = await fetch('/api/admin/tickets/', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${admin.token}`,
+        },
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        setError(json.error);
+        setLoading(false);
+      }
+      if (res.ok) {
+        setError(null);
+        dispatch({ type: 'SET_TICKETS', payload: json });
+        setLoading(false);
+      }
+    };
+    if (!admin) {
+      return;
+    } else {
+      fetchData();
+    }
+  }, [admin]);
 
-  const handleLogout = async () => {
-    adminLogout();
-    navigate('/admin/login');
-  };
-
+  if (!admin || !tickets || loading) return <p>Loading...</p>;
   return (
     <div className="flex items-center justify-center">
       <Container>
@@ -25,12 +47,6 @@ export default function AdminDashboard() {
               Admin Dashboard
             </h1>
           </header>
-          <button
-            className="bg-blue-600 px-3 py-2 text-white rounded hover:bg-blue-800 ease-in-out duration-300"
-            onClick={() => handleLogout()}
-          >
-            Logout
-          </button>
           <div
             id="ticket-links"
             className={`grid w-full gap-3 
@@ -42,6 +58,7 @@ export default function AdminDashboard() {
               }
               `}
           >
+            {/* // .filter((ticket) => ticket.active) */}
             {tickets.map((ticket, index) => (
               <TicketCard key={index} ticket={ticket} url={'/admin/tickets'} />
             ))}
