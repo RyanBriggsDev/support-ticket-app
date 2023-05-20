@@ -18,7 +18,7 @@ export default function Footer() {
       header: 'User Account',
       links: [
         { text: 'Tickets', route: '/tickets' },
-        { text: 'Sign Up', route: '/signup' },
+        { text: 'Sign Up', route: '/sign-up' },
         { text: 'Login', route: '/login' },
       ],
     },

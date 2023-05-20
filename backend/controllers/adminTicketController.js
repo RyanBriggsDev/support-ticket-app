@@ -30,16 +30,24 @@ const updateTicket = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ error: 'Cannot find ticket.' });
     }
-    const ticket = await Ticket.findOneAndUpdate(id, {
-      title,
-      description,
-      active,
-    });
+    const ticket = await Ticket.findOneAndUpdate(
+      id,
+      {
+        title,
+        description,
+        active,
+      },
+      { new: true }
+    );
     await res.status(200).json(ticket);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
+// const doc = await Character.findOneAndUpdate(filter, update, {
+//   new: true,
+// });
 
 // Add new message
 const addMessage = async (req, res) => {

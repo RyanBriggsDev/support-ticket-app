@@ -30,8 +30,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {/* user pages */}
-          <Route path="/tickets" element={<Tickets />} />
           <Route path="/tickets/:id" element={<SingleTicket />} />
+          <Route path="/tickets" element={!user ? <Login /> : <Tickets />} />
           <Route
             path="/login"
             element={!user ? <Login /> : <Navigate to={'/'} />}

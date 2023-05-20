@@ -11,9 +11,14 @@ export default function Home() {
         <Container>
           <div className="flex items-center justify-center flex-col gap-9">
             <header className="flex items-center justify-center flex-col gap-9">
-              <h1 className="text-3xl md:text-5xl text-center">
-                You must be signed in to use the app.
-              </h1>
+              <div className="text-center flex flex-col gap-3 items-center justify-center">
+                <h1 className="text-3xl md:text-5xl">Support Ticket App</h1>
+                <p>Welcome to the app! Please log in or sign up to continue.</p>
+                <p>
+                  {' '}
+                  You'll then be able to raise a ticket for our team to review.
+                </p>
+              </div>
               <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full">
                 <Link
                   className="bg-blue-600 px-3 py-2 text-white rounded hover:bg-blue-800 ease-in-out duration-300 w-1/2 text-center"
