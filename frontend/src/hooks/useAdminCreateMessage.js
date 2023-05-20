@@ -7,6 +7,7 @@ export const useAdminCreateMessage = () => {
   const { id } = useParams();
   const [createMessageError, setCreateMessageError] = useState(null);
   const [createMessageLoading, setCreateMessageLoading] = useState(null);
+  const [newMessageData, setNewMessageData] = useState(null);
 
   const adminCreateMessage = async (message) => {
     setCreateMessageLoading(true);
@@ -30,7 +31,13 @@ export const useAdminCreateMessage = () => {
     }
     if (res.ok) {
       setCreateMessageLoading(false);
+      setNewMessageData(json);
     }
   };
-  return { adminCreateMessage, createMessageError, createMessageLoading };
+  return {
+    adminCreateMessage,
+    createMessageError,
+    createMessageLoading,
+    newMessageData,
+  };
 };

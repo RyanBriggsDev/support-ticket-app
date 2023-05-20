@@ -6,9 +6,13 @@ import { BiSend } from 'react-icons/bi';
 import { useAdminCreateMessage } from '../hooks/useAdminCreateMessage';
 import { useEffect } from 'react';
 
-export default function AdminTicketChat({ messages, setMessageChange }) {
+export default function AdminTicketChat({
+  messages,
+  adminCreateMessage,
+  createMessageError,
+  createMessageLoading,
+}) {
   const { admin } = useAdminContext();
-
   return (
     <Container>
       <div className="shadow bg-white p-6 gap-9 flex flex-col rounded w-full">
@@ -66,16 +70,21 @@ export default function AdminTicketChat({ messages, setMessageChange }) {
             ))}
           </div>
         </div>
-        <MessageForm setMessageChange={setMessageChange} />
+        <MessageForm
+          createMessageError={createMessageError}
+          createMessageLoading={createMessageLoading}
+          adminCreateMessage={adminCreateMessage}
+        />
       </div>
     </Container>
   );
 }
 
-const MessageForm = ({ setMessageChange }) => {
-  const { adminCreateMessage, createMessageError, createMessageLoading } =
-    useAdminCreateMessage();
-
+const MessageForm = ({
+  adminCreateMessage,
+  createMessageError,
+  createMessageLoading,
+}) => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(null);
@@ -96,7 +105,6 @@ const MessageForm = ({ setMessageChange }) => {
       return setError('Please enter a message first.');
     }
     await adminCreateMessage(message);
-    setMessageChange(message);
   };
 
   if (createMessageLoading) {

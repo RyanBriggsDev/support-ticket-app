@@ -5,16 +5,28 @@ import Container from '../../components/Container';
 import AdminTicketChat from '../../components/AdminTicketChat';
 import { useActiveStatus } from '../../hooks/useActiveStatus';
 import Button from '../../components/Button';
+import { useAdminCreateMessage } from '../../hooks/useAdminCreateMessage';
 
 export default function AdminSingleTicket() {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [ticket, setTicket] = useState(null);
-  const [messageChange, setMessageChange] = useState(null);
   const { admin } = useAdminContext();
-  const { setActiveStatus, activeStatusError, activeStatusLoading, newData } =
-    useActiveStatus();
+
+  const {
+    setActiveStatus,
+    activeStatusError,
+    activeStatusLoading,
+    newActiveData,
+  } = useActiveStatus();
+
+  const {
+    adminCreateMessage,
+    createMessageError,
+    createMessageLoading,
+    newMessageData,
+  } = useAdminCreateMessage();
 
   const fetchData = async () => {
     setLoading(true);
@@ -35,18 +47,18 @@ export default function AdminSingleTicket() {
     }
   };
 
-  // initial data call
   useEffect(() => {
     fetchData();
   }, [id]);
 
-  // on active change
   useEffect(() => {
-    setTicket(newData);
-  }, [newData]);
+    setTicket(newActiveData);
+  }, [newActiveData]);
 
-  // on new message
-  useEffect(() => {});
+  useEffect(() => {
+    setTicket(newMessageData);
+    console.log(ticket);
+  }, [newMessageData]);
 
   const handleActiveChange = () => {
     setActiveStatus(!ticket.active);
@@ -75,7 +87,12 @@ export default function AdminSingleTicket() {
           </div>
         </div>
       </Container>
-      <AdminTicketChat messages={ticket.messages} />
+      <AdminTicketChat
+        adminCreateMessage={adminCreateMessage}
+        messages={ticket.messages}
+        createMessageError={createMessageError}
+        createMessageLoading={createMessageLoading}
+      />
       <Button onClick={() => handleActiveChange()}>
         {ticket.active ? 'Mark Resolved' : 'Mark Active'}
       </Button>

@@ -45,10 +45,6 @@ const updateTicket = async (req, res) => {
   }
 };
 
-// const doc = await Character.findOneAndUpdate(filter, update, {
-//   new: true,
-// });
-
 // Add new message
 const addMessage = async (req, res) => {
   const { message, user, userName } = req.body;

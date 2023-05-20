@@ -7,7 +7,7 @@ export const useActiveStatus = () => {
   const { id } = useParams();
   const [activeStatusError, setActiveStatusError] = useState(null);
   const [activeStatusLoading, setActiveStatusLoading] = useState(false);
-  const [newData, setNewData] = useState(null);
+  const [newActiveData, setNewActiveData] = useState(null);
 
   const setActiveStatus = async (active) => {
     setActiveStatusLoading(true);
@@ -26,8 +26,13 @@ export const useActiveStatus = () => {
       setActiveStatusError(json.error);
     } else {
       setActiveStatusLoading(false);
-      setNewData(json);
+      setNewActiveData(json);
     }
   };
-  return { setActiveStatus, activeStatusError, activeStatusLoading, newData };
+  return {
+    setActiveStatus,
+    activeStatusError,
+    activeStatusLoading,
+    newActiveData,
+  };
 };
