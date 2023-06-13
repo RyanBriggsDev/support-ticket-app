@@ -58,7 +58,6 @@ export default function AdminDashboard() {
               }
               `}
           >
-            {/* // .filter((ticket) => ticket.active) */}
             {tickets.map((ticket, index) => (
               <TicketCard key={index} ticket={ticket} url={'/admin/tickets'} />
             ))}

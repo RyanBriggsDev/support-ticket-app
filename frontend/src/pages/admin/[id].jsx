@@ -57,7 +57,6 @@ export default function AdminSingleTicket() {
 
   useEffect(() => {
     setTicket(newMessageData);
-    console.log(ticket);
   }, [newMessageData]);
 
   const handleActiveChange = () => {
@@ -93,9 +92,9 @@ export default function AdminSingleTicket() {
         createMessageError={createMessageError}
         createMessageLoading={createMessageLoading}
       />
-      <Button onClick={() => handleActiveChange()}>
+      {/* <Button onClick={() => handleActiveChange()}>
         {ticket.active ? 'Mark Resolved' : 'Mark Active'}
-      </Button>
+      </Button> */}
     </div>
   );
 }
