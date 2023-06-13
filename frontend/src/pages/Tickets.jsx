@@ -20,6 +20,7 @@ export default function Tickets() {
           Authorization: `Bearer ${user.token}`,
         },
       });
+      pa;
       const json = await res.json();
       if (!res.ok) {
         setError(json.error);
