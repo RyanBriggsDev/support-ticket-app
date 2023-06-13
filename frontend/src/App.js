@@ -29,28 +29,57 @@ function App() {
         {admin ? <AdminNav /> : <Nav />}
         <Routes>
           <Route path="/" element={<Home />} />
+
           {/* user pages */}
           <Route path="/tickets/:id" element={<SingleTicket />} />
           <Route path="/tickets" element={!user ? <Login /> : <Tickets />} />
           <Route
             path="/login"
-            element={!user ? <Login /> : <Navigate to={'/'} />}
+            element={
+              admin ? (
+                <Navigate to="/admin/dashboard" />
+              ) : !user ? (
+                <Login />
+              ) : (
+                <Navigate to={'/'} />
+              )
+            }
           />
           <Route
             path="/sign-up"
-            element={!user ? <SignUp /> : <Navigate to="/" />}
+            element={
+              admin ? (
+                <Navigate to="/admin/dashboard" />
+              ) : !user ? (
+                <SignUp />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
           {/* admin pages */}
           <Route
             path="/admin/login"
             element={
-              !admin ? <AdminLogin /> : <Navigate to="/admin/dashboard" />
+              user ? (
+                <Navigate to="/" />
+              ) : !admin ? (
+                <AdminLogin />
+              ) : (
+                <Navigate to="/admin/dashboard" />
+              )
             }
           />
           <Route
             path="/admin/signup"
             element={
-              !admin ? <AdminSignup /> : <Navigate to="/admin/dashboard" />
+              user ? (
+                <Navigate to="/" />
+              ) : !admin ? (
+                <AdminSignup />
+              ) : (
+                <Navigate to="/admin/dashboard" />
+              )
             }
           />
           <Route

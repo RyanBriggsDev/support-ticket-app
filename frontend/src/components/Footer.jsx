@@ -1,8 +1,12 @@
 import Container from './Container';
 import { useNavigate } from 'react-router-dom';
+import { useAdminContext } from '../hooks/useAdminContext';
+import useAuthContext from '../hooks/useAuthContext';
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const { admin } = useAdminContext();
+  const { user } = useAuthContext();
   const adminData = [
     {
       header: 'Admin Account',
@@ -41,8 +45,14 @@ export default function Footer() {
               </a>
             </p>
           </div>
-          <FooterSection data={adminData} />
-          <FooterSection data={userData} />
+          {admin && <FooterSection data={adminData} />}
+          {user && <FooterSection data={userData} />}
+          {!admin && !user && (
+            <>
+              <FooterSection data={adminData} />
+              <FooterSection data={userData} />
+            </>
+          )}
         </div>
       </Container>
     </footer>
